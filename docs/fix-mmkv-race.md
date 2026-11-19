@@ -106,7 +106,15 @@ apksigner sign --ks <自签keystore> --out WeType-Tool-v2.1.5-p4-patched.apk pat
 
 ## 遗留事项
 
-- **内嵌自动填充呈现层**:系统侧链路已验证正常(autofill 服务 Keyguard 配置完成;
-  autofill 会话状态含 `INLINE_SHOWN`,即 inline 请求已创建、响应已被输入法接受),
-  但工具栏未见建议条,待实机截图确认是否被宿主工具栏内容覆盖/遮挡。前置条件
-  (README):工具栏需添加"收起键盘"按钮;LSPosed 需勾选"系统框架"作用域并重启设备(已做)。
+- **内嵌自动填充呈现层(已定位到代码级)**:系统链路全部正常(服务配置 ✓ / inline 请求创建 ✓ /
+  Keyguard 返回凭据 ✓ / 系统渲染服务产出 532x112 视图 ✓ / 模块收到响应 count=1 ✓),
+  卡在模块将建议条挂载进工具栏的环节(事件 toolbar_attach_state):(TRACE 级日志可见)。
+  逆向挂载例程:模块收集工具栏子视图并硬编码期望 19 个,取最后一个 RelativeLayout 后
+  `findViewById(<期望ID>)` 为 null → 判定插入锚点缺失。属模块对该宿主构建 (4.0.1/59201)
+  的工具栏结构适配缺陷;同期的 `native_toolbar_resolve_failed(工具栏设置项绑定方法不唯一)`
+  警告佐证工具栏解析在该宿主上退化。修复需改写模块的锚点定位逻辑,难度较高,待上游跟进
+  或单独立项。可用替代:官方免 Root 内置版 `-inline-autofill` 变体(作者针对该场景发布)。
+- 调试期间将模块日志等级临时调至 TRACE(设置 → 日志等级),可保留。
+- 附加产物:悬浮键盘底栏常显开关(settings put global wetypefix_keep_floating_bar 1/0),
+  p4 起生效。注意 apktool 会缓存 build/resources.zip,仅改 smali 时 manifest 版本号不会更新,
+  每次构建前应删除 module-decoded/build/。
