@@ -1,0 +1,13 @@
+--- onPreDrawListener.smali (original)
++++ onPreDrawListener.smali (patched)
+@@ -72,4 +72,10 @@
+     .line 16
+     :cond_0
++    invoke-static {p0}, Lwetypefix/MmkvGuard;->check(Landroid/view/View;)Z
++
++    move-result v1
++
++    if-eqz v1, :goto_0
++
+     iget-object v1, v0, Lᛱᛲᛳᛴᛵᛶᛷᛸᲇᲁᤞᲈᤝᲀ;->ᛱᛲᛳᛴᛵᛶᛷᛸᤝᤞᲇᲁᲈᲀ:Lᛱᛲᛳᛴᛵᛶᛷᲀᤝᤞᲈᛸᲇᲁ;
+ 
