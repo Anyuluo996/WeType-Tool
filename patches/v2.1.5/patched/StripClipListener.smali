@@ -4,7 +4,6 @@
 
 # interfaces
 .implements Landroid/view/ViewTreeObserver$OnPreDrawListener;
-.implements Landroid/view/ViewTreeObserver$OnScrollChangedListener;
 
 
 # instance fields
@@ -40,16 +39,4 @@
     const/4 v0, 0x1
 
     return v0
-.end method
-
-.method public final onScrollChanged(IIII)V
-    .locals 2
-
-    iget-object v0, p0, Lwetypefix/StripClipListener;->a:Landroid/view/View;
-
-    iget-object v1, p0, Lwetypefix/StripClipListener;->b:Landroid/view/ViewGroup;
-
-    invoke-static {v0, v1}, Lwetypefix/StripClip;->sync(Landroid/view/View;Landroid/view/ViewGroup;)V
-
-    return-void
 .end method

@@ -36,8 +36,6 @@
 
     invoke-virtual {v1, v0}, Landroid/view/ViewTreeObserver;->addOnPreDrawListener(Landroid/view/ViewTreeObserver$OnPreDrawListener;)V
 
-    invoke-virtual {v1, v0}, Landroid/view/ViewTreeObserver;->addOnScrollChangedListener(Landroid/view/ViewTreeObserver$OnScrollChangedListener;)V
-
     const-string v0, "WeTypeToolStrip"
 
     new-instance v1, Ljava/lang/StringBuilder;
