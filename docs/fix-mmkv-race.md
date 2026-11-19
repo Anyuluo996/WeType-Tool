@@ -1,7 +1,7 @@
 # 修复:悬浮键盘联动与皮肤浅深色跟随失效(MMKV 类初始化竞态)+ 内嵌自动填充 end 锚点缺失
 
 > 基线:WeType Tool v2.1.5 (versionCode 710) × 微信输入法 4.0.1 (59201)
-> 补丁产物:WeType-Tool-v2.1.5-p12-patched.apk(versionCode 722,自签;p4=714 悬浮/皮肤,p6=716 内嵌自动填充,p7=717 芯片左界钳制,p12=722 建议条 surface 裁剪;p8=718 VerifyError 废弃,p9=719 setClipBounds 无效,p10=720 完全滚出态冻结,p11=721 稳态修复)
+> 补丁产物:WeType-Tool-v2.1.5-p17-patched.apk(versionCode 727,自签;p4=714 悬浮/皮肤,p6=716 内嵌自动填充,p7=717 芯片左界钳制,p10=720 surface 裁剪,p11=721 稳态,p17=727 滚动时机裁剪;p8=718 VerifyError 废弃,p9=719 setClipBounds 无效,p12-p15=722-725 甩动收起回归废弃,p16=726 回退基线)
 > 上游仓库仅发布编译产物、无源码,本修复以 smali 补丁方式实施。
 > 状态:主要功能 + 内嵌自动填充已在 realme GT Neo5 (Android 16 / ColorOS 16.0.5.1310 / LSPosed 2.2.1) 实机验证通过。
 
@@ -233,6 +233,24 @@ attach 时同挂 preDraw + scrollChanged 两个监听,滚动变化的那一刻�
 `am force-stop com.tencent.wetype` 后 ColorOS 都会回退预装搜狗**,force-stop 后必须紧跟
 `ime set com.tencent.wetype/.plugin.hld.WxHldService`;排查前先
 `settings get secure default_input_method` 确认。
+
+## 甩动收起回归定位(p12-p16 试错)与安全形态(p17)
+
+p10/p11 后用户实测:快甩候选条时有一帧"新位置+旧裁剪"的文字残影闪过 logo。
+p12 尝试用**根 ViewTreeObserver 的 OnScrollChangedListener** 在滚动时刻即时重算裁剪——
+结果引入回归:**快甩候选条会使整个面板退出**(mInputShown=false,确定性复现;慢拖正常)。
+p13/p14(dispatchTouchEvent 申请父级禁拦截)、p15(回调空操作仅保留注册)均未消除,
+且 p15 收起瞬间零滚动事件——触发源与"根 VTO 滚动监听器注册"和宿主手势引擎的交互有关,
+具体机制未逆向到(收起均伴随进程存活、无异常)。p16 = 精确还原 p11(撤监听器与全部
+dispatch 覆写),实机确认不再退出。
+
+**p17 安全形态**:不动根 VTO、不动 dispatch,在条带 HSV 类**自身**的 `onScrollChanged`
+覆写里追加 `StripClip.sync`(HSV 本就覆写此方法同步滚动边界;现只额外响应条带自己的
+滚动)——实测快甩不退出,滚动时刻裁剪即时生效,面板/填充/裁剪全量正常。
+
+**测试陷阱**:卸载重装模块后需**重启**系统框架 hook 才生效(同签名升级安装 `install -r`
+不需要);Keyguard 锁定态候选条仅 1 颗芯片、不可滚动,快甩场景无法复现——A/B 前必须解锁;
+ColorOS 拒绝版本降级(`install -d` 无效),回退只能卸载重装+重启。
 
 ## 遗留事项
 

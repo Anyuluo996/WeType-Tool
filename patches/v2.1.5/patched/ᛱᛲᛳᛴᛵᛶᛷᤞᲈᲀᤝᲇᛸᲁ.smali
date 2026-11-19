@@ -48,10 +48,18 @@
 .end method
 
 .method public final onScrollChanged(IIII)V
-    .locals 0
+    .locals 3
 
     .line 1
     invoke-super {p0, p1, p2, p3, p4}, Landroid/view/View;->onScrollChanged(IIII)V
+
+    move-object v0, p0
+
+    iget-object v1, p0, Lᛱᛲᛳᛴᛵᛶᛷᤞᲈᲀᤝᲇᛸᲁ;->ᛱᛲᛳᛴᛵᛶᛷᛸᤝᤞᲀᲈᲁᲇ:Lᛱᛲᛳᛴᛵᛶᛷᤞᲈᲀᤝᲇᲁᛸ;
+
+    iget-object v2, v1, Lᛱᛲᛳᛴᛵᛶᛷᤞᲈᲀᤝᲇᲁᛸ;->ᛱᛲᛳᛴᛵᛶᛷᛸᤝᤞᲀᲈᲁᲇ:Landroid/widget/LinearLayout;
+
+    invoke-static {v0, v2}, Lwetypefix/StripClip;->sync(Landroid/view/View;Landroid/view/ViewGroup;)V
 
     .line 2
     .line 3
