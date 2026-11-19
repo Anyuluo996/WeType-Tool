@@ -87,6 +87,9 @@
     .line 20
     .line 21
     move-result v1
+    invoke-static {v1}, Lwetypefix/MmkvGuard;->applyFloatingSwitch(I)I
+
+    move-result v1
 
     .line 22
     iget-object v3, v0, Lᛱᛲᛳᛴᛵᛶᛷᛸᲇᲁᤞᲈᤝᲀ;->ᛱᛲᛳᛴᛵᛶᛷᛸᤝᤞᲈᲁᲀᲇ:Ljava/lang/Boolean;

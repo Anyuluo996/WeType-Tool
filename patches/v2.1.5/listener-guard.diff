@@ -11,3 +11,11 @@
 +
      iget-object v1, v0, Lᛱᛲᛳᛴᛵᛶᛷᛸᲇᲁᤞᲈᤝᲀ;->ᛱᛲᛳᛴᛵᛶᛷᛸᤝᤞᲇᲁᲈᲀ:Lᛱᛲᛳᛴᛵᛶᛷᲀᤝᤞᲈᛸᲇᲁ;
  
+@@ -81,4 +87,7 @@
+     .line 20
+     .line 21
++    move-result v1
++    invoke-static {v1}, Lwetypefix/MmkvGuard;->applyFloatingSwitch(I)I
++
+     move-result v1
+ 
