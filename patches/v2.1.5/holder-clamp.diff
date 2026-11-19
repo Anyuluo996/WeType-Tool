@@ -1,0 +1,69 @@
+--- a/AutofillChipHolder.smali
++++ b/AutofillChipHolder.smali
+@@ -43,6 +43,7 @@
+ 
+ 
+ # direct methods
++.field public wetypefixExtraRect:Landroid/graphics/Rect;
+ .method static constructor <clinit>()V
+     .locals 3
+ 
+@@ -155,7 +156,7 @@
+ .end method
+ 
+ .method public constructor <init>(Landroid/widget/RelativeLayout;Landroid/view/View;Landroid/view/View;Landroid/widget/ImageView;Landroid/view/View;Lᛱᛲᛳᛴᛵᛶᛷᤞᲈᲀᤝᲇᲁᛸ;Lᛱᛲᛳᛴᛵᛶᛷᤞᲈᲀᲇᛸᤝᲁ;Lᛱᛲᛳᛴᛵᛶᛷᤞᲈᲀᲁᲇᤝᛸ;)V
+-    .locals 0
++    .locals 1
+ 
+     .line 1
+     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+@@ -301,6 +302,12 @@
+ 
+     .line 75
+     .line 76
++    new-instance v0, Landroid/graphics/Rect;
++
++    invoke-direct {v0}, Landroid/graphics/Rect;-><init>()V
++
++    iput-object v0, p0, Lᛱᛲᛳᛴᛵᛶᛷᤞᲈᲁᲀᛸᤝᲇ;->wetypefixExtraRect:Landroid/graphics/Rect;
++
+     return-void
+ 
+     .line 77
+@@ -697,6 +704,23 @@
+     .line 86
+     invoke-virtual {v1, v5, v11}, Landroid/view/ViewGroup;->offsetDescendantRectToMyCoords(Landroid/view/View;Landroid/graphics/Rect;)V
+ 
++    # p7: also clamp chip left by the visible logo_image icon right edge
++    iget-object v12, v0, Lᛱᛲᛳᛴᛵᛶᛷᤞᲈᲁᲀᛸᤝᲇ;->wetypefixExtraRect:Landroid/graphics/Rect;
++
++    iget-object v13, v0, Lᛱᛲᛳᛴᛵᛶᛷᤞᲈᲁᲀᛸᤝᲇ;->ᛱᛲᛳᛴᛵᛶᛷᛸᤝᤞᲁᲀᲈᲇ:Landroid/widget/ImageView;
++
++    invoke-virtual {v13}, Landroid/view/View;->getWidth()I
++
++    move-result v7
++
++    invoke-virtual {v13}, Landroid/view/View;->getHeight()I
++
++    move-result v8
++
++    invoke-virtual {v12, v10, v10, v7, v8}, Landroid/graphics/Rect;->set(IIII)V
++
++    invoke-virtual {v1, v13, v12}, Landroid/view/ViewGroup;->offsetDescendantRectToMyCoords(Landroid/view/View;Landroid/graphics/Rect;)V
++
+     .line 87
+     .line 88
+     .line 89
+@@ -717,6 +741,12 @@
+     .line 96
+     .line 97
+     .line 98
++    move-result v4
++
++    iget v5, v12, Landroid/graphics/Rect;->right:I
++
++    invoke-static {v4, v5}, Ljava/lang/Math;->max(II)I
++
+     move-result v4
+ 
+     .line 99

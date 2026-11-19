@@ -1,7 +1,7 @@
 # 修复:悬浮键盘联动与皮肤浅深色跟随失效(MMKV 类初始化竞态)+ 内嵌自动填充 end 锚点缺失
 
 > 基线:WeType Tool v2.1.5 (versionCode 710) × 微信输入法 4.0.1 (59201)
-> 补丁产物:WeType-Tool-v2.1.5-p6-patched.apk(versionCode 716,自签;p4=714 悬浮/皮肤,p6=716 追加内嵌自动填充)
+> 补丁产物:WeType-Tool-v2.1.5-p7-patched.apk(versionCode 717,自签;p4=714 悬浮/皮肤,p6=716 内嵌自动填充,p7=717 芯片防覆盖图标)
 > 上游仓库仅发布编译产物、无源码,本修复以 smali 补丁方式实施。
 > 状态:主要功能 + 内嵌自动填充已在 realme GT Neo5 (Android 16 / ColorOS 16.0.5.1310 / LSPosed 2.2.1) 实机验证通过。
 
@@ -83,6 +83,7 @@ adb shell settings put global wetypefix_keep_floating_bar 0   # 恢复默认(悬
   + 补丁后内嵌自动填充处理器 smali
 - `patches/v2.1.5/listener-guard.diff`:监听器注入 diff(2 处:守卫 + 悬浮开关)
 - `patches/v2.1.5/handler-endanchor.diff`:内嵌自动填充处理器注入 diff(1 处:end 锚回退)
+- `patches/v2.1.5/holder-clamp.diff`:芯片 holder 定位钳制 diff(4 处:字段 + 构造器初始化 + 可见图标右缘钳制)
 
 ## 构建复现
 
@@ -90,11 +91,12 @@ adb shell settings put global wetypefix_keep_floating_bar 0   # 恢复默认(悬
 apktool d -f -o module-decoded WeType-Tool-v2.1.5.apk
 # 1. 新增 smali/wetypefix/MmkvGuard.smali 与 smali/wetypefix/EndAnchor.smali
 #    (见 patches/v2.1.5/patched/)
-# 2. 按 patches/v2.1.5/listener-guard.diff 修改监听器 smali
+# 2. 按 patches/v2.1.5/listener-guard.diff 修改监听器 smali;
+#    按 handler-endanchor.diff / holder-clamp.diff 修改另两处
 # 3. 按 patches/v2.1.5/handler-endanchor.diff 修改内嵌自动填充处理器 smali
 # 4. 删除 AndroidManifest.xml 中 android:enableOnBackInvokedCallback
 #    (apktool 3.0.3 框架不识别,可安全移除)
-# 5. apktool.yml: versionCode 710→716, versionName 2.1.5→2.1.5-p6
+# 5. apktool.yml: versionCode 710→717, versionName 2.1.5→2.1.5-p7
 # 6. 每次构建前删除 module-decoded/build/(apktool 缓存 build/resources.zip
 #    会导致仅改 smali 时 manifest 版本号不更新)
 apktool b module-decoded -o patched-unsigned.apk
@@ -140,6 +142,28 @@ apksigner sign --ks <自签keystore> --out WeType-Tool-v2.1.5-p6-patched.apk pat
 - 截图确认候选栏中部渲染出密码管理器(Keyguard)的内嵌建议芯片。
 - 回归:正常打字候选词正常、无新增异常、键盘弹出正常。
 - 版本 716 / 2.1.5-p6;构建前删除 module-decoded/build/(apktool 缓存教训)。
+
+## 芯片覆盖左侧图标修复(p7)
+
+用户实测(2026-11-20 02:42):某些状态下自动填充芯片渲染在候选栏最左,盖住微信 logo 图标;
+且拖动芯片到图标附近后键盘面板曾收起为工具条(宿主手势,非必现,进程重启复位)。
+
+正常态几何恒为 left=186(候选区左缘),芯片不会覆盖图标 — 覆盖发生时宿主候选区布局
+塌到最左(middle.left ≈ 35),模块几何公式的图标保护只依赖 `logo` 锚
+(chip.left = max(middle.left, logo.right)),而**可见图标其实是 logo_image**,
+logo 锚值过小无法挡住。
+
+修复(holder diff,4 处):定位方法计算 chip.left 时,把 **logo_image(可见图标)右缘**
+也纳入 max 钳制 — 新增 `wetypefixExtraRect` 实例字段(构造器初始化)复用,
+preDraw 每帧对 logo_image 做 offsetDescendantRectToMyCoords 后
+`chip.left = max(middle.left, logo.right, logo_image.right)`。
+
+- 正常态:186 > 图标右缘,几何不变,零回归。
+- 塌陷态:芯片从图标右缘起渲染,最窄不覆盖图标;若间隙不足(width ≤ 0)沿用原有隐藏分支。
+- 版本 717 / 2.1.5-p7;`patches/v2.1.5/holder-clamp.diff`。
+
+附注:锁屏指纹验证无法自动化,塌陷态需用户日常使用中观察;若再次出现"滑动芯片后键盘
+收起为工具条",该行为来自宿主候选栏手势(与补丁无关,force-stop 复位),日志可佐证。
 
 ## 遗留事项
 
