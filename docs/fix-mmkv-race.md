@@ -1,7 +1,7 @@
 # 修复:悬浮键盘联动与皮肤浅深色跟随失效(MMKV 类初始化竞态)+ 内嵌自动填充 end 锚点缺失
 
 > 基线:WeType Tool v2.1.5 (versionCode 710) × 微信输入法 4.0.1 (59201)
-> 补丁产物:WeType-Tool-v2.1.5-p11-patched.apk(versionCode 721,自签;p4=714 悬浮/皮肤,p6=716 内嵌自动填充,p7=717 芯片左界钳制,p11=721 建议条 surface 裁剪;p8=718 VerifyError 废弃,p9=719 setClipBounds 无效,p10=720 完全滚出态冻结)
+> 补丁产物:WeType-Tool-v2.1.5-p12-patched.apk(versionCode 722,自签;p4=714 悬浮/皮肤,p6=716 内嵌自动填充,p7=717 芯片左界钳制,p12=722 建议条 surface 裁剪;p8=718 VerifyError 废弃,p9=719 setClipBounds 无效,p10=720 完全滚出态冻结,p11=721 稳态修复)
 > 上游仓库仅发布编译产物、无源码,本修复以 smali 补丁方式实施。
 > 状态:主要功能 + 内嵌自动填充已在 realme GT Neo5 (Android 16 / ColorOS 16.0.5.1310 / LSPosed 2.2.1) 实机验证通过。
 
@@ -220,6 +220,14 @@ surface 内容不受视图层级画布裁剪,滚出左界的部分直接绘制�
 "newapi anyul" 完整回到起点、精确从视口左缘开始,无残片;中间态 sx=255 尾部裁剪
 精确贴边界;logo 全程无遮挡;VerifyError=0。状态日志:logcat 标签
 **WeTypeToolStrip**(`w=/sx=/n=/clip=`,状态变化时输出)。
+
+**p12(722)甩动闪现修复**:甩动时 HSV 滚动变化在绘制周期外触发
+OnScrollChanged,SurfaceView 据此立即同步 surface 位置,而裁剪原本要等下一次
+onPreDraw——一至两帧的空窗里"新位置 + 旧裁剪"会让芯片残端短暂闪到 logo 上。
+修复:StripClipListener 同时实现 `ViewTreeObserver.OnScrollChangedListener`,
+attach 时同挂 preDraw + scrollChanged 两个监听,滚动变化的那一刻即重算裁剪
+(与位置同步同一调用栈、同一 vsync 合成,消除竞态窗口);onPreDraw 保留,
+继续覆盖挂载/布局变化。
 
 附注: sj 的默认输入法多次被切到搜狗(com.sohu.inputmethod.sogouoem)——**每次
 `am force-stop com.tencent.wetype` 后 ColorOS 都会回退预装搜狗**,force-stop 后必须紧跟
