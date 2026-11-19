@@ -1,7 +1,7 @@
 # 修复:悬浮键盘联动与皮肤浅深色跟随失效(MMKV 类初始化竞态)+ 内嵌自动填充 end 锚点缺失
 
 > 基线:WeType Tool v2.1.5 (versionCode 710) × 微信输入法 4.0.1 (59201)
-> 补丁产物:WeType-Tool-v2.1.5-p9-patched.apk(versionCode 719,自签;p4=714 悬浮/皮肤,p6=716 内嵌自动填充,p7=717 芯片左界钳制,p9=719 建议条 surface 裁剪;p8=718 VerifyError 废弃)
+> 补丁产物:WeType-Tool-v2.1.5-p11-patched.apk(versionCode 721,自签;p4=714 悬浮/皮肤,p6=716 内嵌自动填充,p7=717 芯片左界钳制,p11=721 建议条 surface 裁剪;p8=718 VerifyError 废弃,p9=719 setClipBounds 无效,p10=720 完全滚出态冻结)
 > 上游仓库仅发布编译产物、无源码,本修复以 smali 补丁方式实施。
 > 状态:主要功能 + 内嵌自动填充已在 realme GT Neo5 (Android 16 / ColorOS 16.0.5.1310 / LSPosed 2.2.1) 实机验证通过。
 
@@ -165,7 +165,7 @@ preDraw 每帧对 logo_image 做 offsetDescendantRectToMyCoords 后
 附注:锁屏指纹验证无法自动化,塌陷态需用户日常使用中观察;若再次出现"滑动芯片后键盘
 收起为工具条",该行为来自宿主候选栏手势(与补丁无关,force-stop 复位),日志可佐证。
 
-## 建议条溢出覆盖图标修复(p9,真正根因)
+## 建议条溢出覆盖图标修复(p10,真正根因)
 
 p7 后用户实测(03:27 截图)仍覆盖。日志显示芯片容器几何一直正确(left=186),但容器内
 建议条内容是**可横向滚动**的(suggestion_scroll_edges:viewport 1046 / content 1352~3317):
@@ -173,19 +173,53 @@ p7 后用户实测(03:27 截图)仍覆盖。日志显示芯片容器几何一直
 surface 内容不受视图层级画布裁剪,滚出左界的部分直接绘制在候选栏 logo 上
 (scroll=150 时首 chip 左缘 = 186-150=36,与截图吻合)。p7 的容器级钳制管不到 surface 内容。
 
-修复(`wetypefix/StripClip` + `StripClipListener`,strip-clip.diff 单 hunk):
+修复(`wetypefix/StripClip` + `StripClipListener`,strip-clip.diff 单 hunk):条带构造器末尾
+(循环出口公共路径)在滚动容器上注册 preDraw 监听;每帧对条带 LinearLayout 每张卡片
+递归查找 InlineContentView,以滚动容器可视窗口换算卡片局部坐标窗口,把 surface 裁剪
+在视口内;卡片完全滚出视口 → 空裁剪 → 不绘制;全程 try/catch 兜底。
 
-- 芯片条带类构造器末尾(循环出口公共路径)注册 preDraw 监听(挂在滚动容器上)。
-- 每帧对条带 LinearLayout 每张卡片递归查找 InlineContentView,以滚动容器可视窗口
-  (卡片局部坐标 `[scrollX - cardLeft, scrollX + viewport - cardLeft]`)计算
-  `InlineContentView.setClipBounds`,surface 内容被硬裁剪在容器视口内。
-- 卡片完全滚出视口 → 空裁剪 → 不绘制;正常态几何与滚动行为不变;全程 try/catch 兜底。
-- 版本 719 / 2.1.5-p9;`patches/v2.1.5/strip-clip.diff`。
+**p8(718)废弃**:首版 StripClip 循环回边寄存器类型冲突(int ↔ 对象引用)→
+`VerifyError: Verifier rejected class wetypefix.StripClip`,响应处理中断、内嵌填充
+完全不显示。修复:对象寄存器循环前置 null 初始化。
 
-**p8(718)为废弃版**:首版 StripClip 的 sync/walk 在循环回边存在寄存器类型冲突
-(int ↔ 对象引用),触发 `VerifyError: Verifier rejected class wetypefix.StripClip`,
-自动填充响应处理中断 → 内嵌填充完全不显示。修复:对象寄存器循环前置 null 初始化
-(null 与引用类型合并合法)。p9 实机验证:attached × 2 / VerifyError=0 / 芯片点击填充正常。
+**p9(719)无效,两点教训**:
+
+1. **`InlineContentView.setClipBounds` 在宿主环境是无操作**。AOSP
+   `SurfaceView.setClipBounds` 开头即 early-return:
+   `if (mClipSurfaceToBounds || mSurfaceControl == null) return;`(另有
+   `Flags.clipSurfaceviews()` 的 RT 驱动分支同样 return)。`mClipSurfaceToBounds`
+   只被 `setEnableSurfaceClipping(true)`(hide)打开,且仅 InlineContentView 的
+   3 参构造器会调它——IME 侧拿到的实例不走该路径时,`setClipBounds` 静默无效。
+2. 坐标换算两处方向错误:sync 右缘写成 `viewport + cardLeft`(应为
+   `scrollX + viewport - cardLeft - linearLeft`);walk 递归把子级窗口写成
+   `L + childLeft`(应为 `L - childLeft`)。
+
+**p10(720)生效版**:绕过 setClipBounds,在 walk 命中 InlineContentView 处直接
+`new SurfaceControl.Transaction().setWindowCrop(icv.getSurfaceControl(), rect).apply()`
+(公开 API,裁剪落在 surface 状态上,不依赖任何 flag);坐标按上式修正;attach/sync
+经 `android.util.Log` 标签 **WeTypeToolStrip** 输出 `w=/sx=/n=/clip=` 状态日志
+(logcat 直读,不受模块日志等级控制)。
+
+实机验证(sj,2026-11-20 04:19,wo4.ts.anyul.cn 登录页 + Keyguard 内嵌建议):
+`w=1046 sx=1532 n=5 clip=5`(满滚动),截图确认 logo 无遮挡、滚出芯片只剩视口内
+残端;回滑后裁剪随 sx 重算恢复,无残留;VerifyError=0;键盘/点击填充正常。
+
+**p10(720)遗留缺陷**:芯片**完全滚出视口**再滚回后,其 surface 的位置与裁剪会被
+框架冻结——日志已报 `sx=0` 而画面仍停留在 sx≈560 的残片;后续 setWindowCrop 与
+位置同步都压不过该冻结态,用户截图表现为"文字带底色条覆盖在 logo 上"。
+
+**p11(721)最终版**:walk 中对完全滚出(可视区间为空,r ≤ l)的芯片不再依赖空裁剪:
+
+- `SurfaceControl.Transaction.setAlpha(sc, 0f)` 直接隐身该 surface(独立于位置/裁剪
+  任何冻结路径);
+- 同时 `setClipBounds(null)` 清掉视图侧陈旧裁剪 + `invalidate()`;
+- 回到视口时 `setAlpha(1f)` 与窗口裁剪在同一事务应用,invalidate 驱动 ICV 走一次
+  onDraw 的位置重同步,surface 恢复正确位置。
+
+实机验证(sj,2026-11-20 04:33,5 颗芯片):满滚动 sx=1532 → 回滑 sx=0,芯片
+"newapi anyul" 完整回到起点、精确从视口左缘开始,无残片;中间态 sx=255 尾部裁剪
+精确贴边界;logo 全程无遮挡;VerifyError=0。状态日志:logcat 标签
+**WeTypeToolStrip**(`w=/sx=/n=/clip=`,状态变化时输出)。
 
 附注: sj 的默认输入法多次被切到搜狗(com.sohu.inputmethod.sogouoem)——**每次
 `am force-stop com.tencent.wetype` 后 ColorOS 都会回退预装搜狗**,force-stop 后必须紧跟
