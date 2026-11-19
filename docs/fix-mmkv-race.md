@@ -1,7 +1,7 @@
 # 修复:悬浮键盘联动与皮肤浅深色跟随失效(MMKV 类初始化竞态)+ 内嵌自动填充 end 锚点缺失
 
 > 基线:WeType Tool v2.1.5 (versionCode 710) × 微信输入法 4.0.1 (59201)
-> 补丁产物:WeType-Tool-v2.1.5-p7-patched.apk(versionCode 717,自签;p4=714 悬浮/皮肤,p6=716 内嵌自动填充,p7=717 芯片防覆盖图标)
+> 补丁产物:WeType-Tool-v2.1.5-p9-patched.apk(versionCode 719,自签;p4=714 悬浮/皮肤,p6=716 内嵌自动填充,p7=717 芯片左界钳制,p9=719 建议条 surface 裁剪;p8=718 VerifyError 废弃)
 > 上游仓库仅发布编译产物、无源码,本修复以 smali 补丁方式实施。
 > 状态:主要功能 + 内嵌自动填充已在 realme GT Neo5 (Android 16 / ColorOS 16.0.5.1310 / LSPosed 2.2.1) 实机验证通过。
 
@@ -89,9 +89,9 @@ adb shell settings put global wetypefix_keep_floating_bar 0   # 恢复默认(悬
 
 ```shell
 apktool d -f -o module-decoded WeType-Tool-v2.1.5.apk
-# 1. 新增 smali/wetypefix/MmkvGuard.smali 与 smali/wetypefix/EndAnchor.smali
-#    (见 patches/v2.1.5/patched/)
-# 2. 按 patches/v2.1.5/listener-guard.diff 修改监听器 smali;
+# 1. 新增 smali/wetypefix/{MmkvGuard,EndAnchor,StripClip,StripClipListener}.smali
+#    与补丁后的内嵌自动填充处理器/条带类 smali(见 patches/v2.1.5/patched/)
+# 2. 按 listener-guard.diff / handler-endanchor.diff / holder-clamp.diff / strip-clip.diff 逐处修改;
 #    按 handler-endanchor.diff / holder-clamp.diff 修改另两处
 # 3. 按 patches/v2.1.5/handler-endanchor.diff 修改内嵌自动填充处理器 smali
 # 4. 删除 AndroidManifest.xml 中 android:enableOnBackInvokedCallback
@@ -164,6 +164,33 @@ preDraw 每帧对 logo_image 做 offsetDescendantRectToMyCoords 后
 
 附注:锁屏指纹验证无法自动化,塌陷态需用户日常使用中观察;若再次出现"滑动芯片后键盘
 收起为工具条",该行为来自宿主候选栏手势(与补丁无关,force-stop 复位),日志可佐证。
+
+## 建议条溢出覆盖图标修复(p9,真正根因)
+
+p7 后用户实测(03:27 截图)仍覆盖。日志显示芯片容器几何一直正确(left=186),但容器内
+建议条内容是**可横向滚动**的(suggestion_scroll_edges:viewport 1046 / content 1352~3317):
+用户滑动后内容左移出容器,而每条建议是独立的 **InlineContentView(surface 渲染)**,
+surface 内容不受视图层级画布裁剪,滚出左界的部分直接绘制在候选栏 logo 上
+(scroll=150 时首 chip 左缘 = 186-150=36,与截图吻合)。p7 的容器级钳制管不到 surface 内容。
+
+修复(`wetypefix/StripClip` + `StripClipListener`,strip-clip.diff 单 hunk):
+
+- 芯片条带类构造器末尾(循环出口公共路径)注册 preDraw 监听(挂在滚动容器上)。
+- 每帧对条带 LinearLayout 每张卡片递归查找 InlineContentView,以滚动容器可视窗口
+  (卡片局部坐标 `[scrollX - cardLeft, scrollX + viewport - cardLeft]`)计算
+  `InlineContentView.setClipBounds`,surface 内容被硬裁剪在容器视口内。
+- 卡片完全滚出视口 → 空裁剪 → 不绘制;正常态几何与滚动行为不变;全程 try/catch 兜底。
+- 版本 719 / 2.1.5-p9;`patches/v2.1.5/strip-clip.diff`。
+
+**p8(718)为废弃版**:首版 StripClip 的 sync/walk 在循环回边存在寄存器类型冲突
+(int ↔ 对象引用),触发 `VerifyError: Verifier rejected class wetypefix.StripClip`,
+自动填充响应处理中断 → 内嵌填充完全不显示。修复:对象寄存器循环前置 null 初始化
+(null 与引用类型合并合法)。p9 实机验证:attached × 2 / VerifyError=0 / 芯片点击填充正常。
+
+附注: sj 的默认输入法多次被切到搜狗(com.sohu.inputmethod.sogouoem)——**每次
+`am force-stop com.tencent.wetype` 后 ColorOS 都会回退预装搜狗**,force-stop 后必须紧跟
+`ime set com.tencent.wetype/.plugin.hld.WxHldService`;排查前先
+`settings get secure default_input_method` 确认。
 
 ## 遗留事项
 

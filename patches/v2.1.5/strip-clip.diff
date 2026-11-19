@@ -1,0 +1,18 @@
+--- a/AutofillStrip.smali
++++ b/AutofillStrip.smali
+@@ -449,6 +449,15 @@
+ 
+     .line 216
+     :cond_0
++
++
++
++    # p8: clip inline suggestion surfaces to the strip viewport
++    iget-object v0, p0, Lᛱᛲᛳᛴᛵᛶᛷᤞᲈᲀᤝᲇᲁᛸ;->ᛱᛲᛳᛴᛵᛶᛷᛸᤝᤞᲇᲀᲁᲈ:Lᛱᛲᛳᛴᛵᛶᛷᤞᲈᲀᤝᲇᛸᲁ;
++
++    iget-object v1, p0, Lᛱᛲᛳᛴᛵᛶᛷᤞᲈᲀᤝᲇᲁᛸ;->ᛱᛲᛳᛴᛵᛶᛷᛸᤝᤞᲀᲈᲁᲇ:Landroid/widget/LinearLayout;
++
++    invoke-static {v0, v1}, Lwetypefix/StripClip;->attach(Landroid/view/View;Landroid/view/ViewGroup;)V
+     return-void
+ 
+     .line 217
