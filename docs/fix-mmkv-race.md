@@ -1,9 +1,9 @@
-# 修复:悬浮键盘联动与皮肤浅深色跟随失效(MMKV 类初始化竞态)
+# 修复:悬浮键盘联动与皮肤浅深色跟随失效(MMKV 类初始化竞态)+ 内嵌自动填充 end 锚点缺失
 
 > 基线:WeType Tool v2.1.5 (versionCode 710) × 微信输入法 4.0.1 (59201)
-> 补丁产物:WeType-Tool-v2.1.5-p4-patched.apk(versionCode 714,自签)
+> 补丁产物:WeType-Tool-v2.1.5-p6-patched.apk(versionCode 716,自签;p4=714 悬浮/皮肤,p6=716 追加内嵌自动填充)
 > 上游仓库仅发布编译产物、无源码,本修复以 smali 补丁方式实施。
-> 状态:主要功能已在 realme GT Neo5 (Android 16 / ColorOS 16.0.5.1310 / LSPosed 2.2.1) 实机验证通过。
+> 状态:主要功能 + 内嵌自动填充已在 realme GT Neo5 (Android 16 / ColorOS 16.0.5.1310 / LSPosed 2.2.1) 实机验证通过。
 
 ## 现象(诊断包 wetype.log,2026-11-19 22:37)
 
@@ -79,21 +79,27 @@ adb shell settings put global wetypefix_keep_floating_bar 0   # 恢复默认(悬
 ## 文件
 
 - `patches/v2.1.5/original/`:原版监听器 smali(内容锚点 `bottom_bar_floating_changed`)
-- `patches/v2.1.5/patched/`:补丁后监听器 + `MmkvGuard.smali`
+- `patches/v2.1.5/patched/`:补丁后监听器 + `MmkvGuard.smali` + `EndAnchor.smali`
+  + 补丁后内嵌自动填充处理器 smali
 - `patches/v2.1.5/listener-guard.diff`:监听器注入 diff(2 处:守卫 + 悬浮开关)
+- `patches/v2.1.5/handler-endanchor.diff`:内嵌自动填充处理器注入 diff(1 处:end 锚回退)
 
 ## 构建复现
 
 ```shell
 apktool d -f -o module-decoded WeType-Tool-v2.1.5.apk
-# 1. 新增 smali/wetypefix/MmkvGuard.smali(见 patches/v2.1.5/patched/)
+# 1. 新增 smali/wetypefix/MmkvGuard.smali 与 smali/wetypefix/EndAnchor.smali
+#    (见 patches/v2.1.5/patched/)
 # 2. 按 patches/v2.1.5/listener-guard.diff 修改监听器 smali
-# 3. 删除 AndroidManifest.xml 中 android:enableOnBackInvokedCallback
+# 3. 按 patches/v2.1.5/handler-endanchor.diff 修改内嵌自动填充处理器 smali
+# 4. 删除 AndroidManifest.xml 中 android:enableOnBackInvokedCallback
 #    (apktool 3.0.3 框架不识别,可安全移除)
-# 4. apktool.yml: versionCode 710→714, versionName 2.1.5→2.1.5-p4
+# 5. apktool.yml: versionCode 710→716, versionName 2.1.5→2.1.5-p6
+# 6. 每次构建前删除 module-decoded/build/(apktool 缓存 build/resources.zip
+#    会导致仅改 smali 时 manifest 版本号不更新)
 apktool b module-decoded -o patched-unsigned.apk
 zipalign -f -p 4 patched-unsigned.apk patched-aligned.apk
-apksigner sign --ks <自签keystore> --out WeType-Tool-v2.1.5-p4-patched.apk patched-aligned.apk
+apksigner sign --ks <自签keystore> --out WeType-Tool-v2.1.5-p6-patched.apk patched-aligned.apk
 ```
 
 ## 安装注意
@@ -104,16 +110,39 @@ apksigner sign --ks <自签keystore> --out WeType-Tool-v2.1.5-p4-patched.apk pat
 - 上游发新版后需按同思路重打补丁(定位锚点:诊断包堆栈的 `onPreDraw` r8-map-id 类 +
   内容锚点 `bottom_bar_floating_changed`)。
 
+## 内嵌自动填充 end 锚点修复(p6)
+
+### 根因(此前记录的 end_missing,定位后与"19 个子视图"的早期猜测不符)
+
+- 挂载例程实际收集的是**候选栏容器**:递归遍历 decor 树,收集类名为
+  `com.tencent.wetype.plugin.hld.candidate.ImeCandidateView` 且可见的 RelativeLayout,
+  数量必须恰好 1(0→candidate_not_visible,>1→candidate_ambiguous)。
+- 4 个锚点 ID(middle/end/logo/logo_image)由模块经 DexKit 在宿主插件 dex 中解析
+  R$id 字段获得(toolbar_ids_ready 事件回显实际值,4.0.1 上 end=2131296691),解析本身成功。
+- 失败点:候选栏容器内 `findViewById(end)` 返回 null——**宿主 4.0.1 的 ImeCandidateView
+  布局里已不存在 id=end 的右侧锚视图**(宿主 base APK 与插件中均无该 id 对应视图)。
+  middle(候选 RecyclerView)/logo/logo_image 均在,end 单独缺失,属宿主布局结构变更。
+
+### 修复(wetypefix/EndAnchor,handler-endanchor.diff,单 hunk)
+
+挂载例程在 end 查找失败分支注入回退:调用 `EndAnchor.ensure(toolbar, endId)`:
+
+- 先按 endId 复查(幂等,防重复注入);仍无则 new 一个 0 宽 ×1 高的 View,
+  `setId(endId)` 后以 `ALIGN_PARENT_RIGHT` 规则加进候选栏容器,返回之。
+- 布局语义:end 仅作为芯片右边界锚(芯片区间 = max(middle.left, logo.right) …
+  min(middle.right, end.left),垂直按 logo 图标中心对齐),0 宽右缘锚即"芯片延伸至候选区右缘"。
+- 内部 try/catchall 兜底,任何异常返回 null → 走原有错误分支,不新增崩溃路径。
+
+### 实机验证(sj,2026-11-20 02:28)
+
+- `toolbar_attach_state reason=attached`(原 end_missing)→ `toolbar_attached
+  "自动填充建议已替换工具栏中间区域"` → `toolbar_geometry left=186 width=1054`。
+- 截图确认候选栏中部渲染出密码管理器(Keyguard)的内嵌建议芯片。
+- 回归:正常打字候选词正常、无新增异常、键盘弹出正常。
+- 版本 716 / 2.1.5-p6;构建前删除 module-decoded/build/(apktool 缓存教训)。
+
 ## 遗留事项
 
-- **内嵌自动填充呈现层(已定位到代码级)**:系统链路全部正常(服务配置 ✓ / inline 请求创建 ✓ /
-  Keyguard 返回凭据 ✓ / 系统渲染服务产出 532x112 视图 ✓ / 模块收到响应 count=1 ✓),
-  卡在模块将建议条挂载进工具栏的环节(事件 toolbar_attach_state):(TRACE 级日志可见)。
-  逆向挂载例程:模块收集工具栏子视图并硬编码期望 19 个,取最后一个 RelativeLayout 后
-  `findViewById(<期望ID>)` 为 null → 判定插入锚点缺失。属模块对该宿主构建 (4.0.1/59201)
-  的工具栏结构适配缺陷;同期的 `native_toolbar_resolve_failed(工具栏设置项绑定方法不唯一)`
-  警告佐证工具栏解析在该宿主上退化。修复需改写模块的锚点定位逻辑,难度较高,待上游跟进
-  或单独立项。可用替代:官方免 Root 内置版 `-inline-autofill` 变体(作者针对该场景发布)。
 - 调试期间将模块日志等级临时调至 TRACE(设置 → 日志等级),可保留。
 - 附加产物:悬浮键盘底栏常显开关(settings put global wetypefix_keep_floating_bar 1/0),
   p4 起生效。注意 apktool 会缓存 build/resources.zip,仅改 smali 时 manifest 版本号不会更新,

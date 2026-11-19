@@ -1,0 +1,310 @@
+--------- beginning of main
+11-20 02:34:59.111  1882  2010 E bms_heating: BmsHeatingCheckThread status: 0
+11-20 02:34:59.118  3624  4551 W OplusAppStartupManager: prevent start com.rikumi.colorosmod, cmp ComponentInfo{com.rikumi.colorosmod/com.rikumi.colorosmod.SettingsProvider} by contentprovider com.heytap.market callingUid 10080, scenePriority = 0
+--------- beginning of system
+11-20 02:34:59.119 26423 26546 E ActivityThread: Failed to find provider info for com.rikumi.colorosmod.settings
+11-20 02:34:59.120 13662 22272 D ShellSubscriberWorkerThread: the first 8 bytes empty, and RestData length > 8 
+11-20 02:34:59.148  3624  4500 W SensorService: Dropping 1 cached events (10000/10000) to save 1/1 new events. 99 events previously dropped, app:com.google.android.gms type=11
+11-20 02:34:59.216  3624  4500 W SensorService: Dropping 1 cached events (10000/10000) to save 1/1 new events. 99 events previously dropped, app:com.google.android.gms type=10
+11-20 02:34:59.230  4906  4961 W OPLUS_LOG_LOAD: ==LOGS PROG INFO, prog(com.android.systemui) ==
+11-20 02:34:59.230  4906  4961 I ndroid.systemui: Background concurrent mark compact GC freed 24MB AllocSpace bytes, 1(20KB) LOS objects, 38% free,37MB(M:35MB,L:2204KB)/61MB, paused 661us,2.320ms total 204.435ms
+11-20 02:34:59.281 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:34:59.281 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17342, identity:qcom-perfd
+11-20 02:34:59.283 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:34:59.293  1751   473 I sensors-hal: handle_sns_std_sensor_event:103, oplus rgb_rear sample: (cct, lux, ir, x, y)[5200, 0, 476, 338, 333]
+11-20 02:34:59.293  1751   473 I sensors-hal: handle_sns_std_sensor_event:105, oplus rgb_rear sample: (r, g, b, c w)[0, 0, 0, 0, 0]
+11-20 02:34:59.312 17262 14884 I [UAH_CLIENT]: UahRelease, handle:8524
+11-20 02:34:59.497  2815  2815 I cnss-daemon: nl80211 response handler invoked
+11-20 02:34:59.497  1774  4751 I WifiHAL : event received NL80211_CMD_VENDOR, vendor_id = 0x1374, subcmd = 0xa
+11-20 02:34:59.497  2815  2815 I cnss-daemon: nl80211_response_handler: cmd 103, vendorID 4980, subcmd 10  received
+11-20 02:34:59.500  4760  4760 I wpa_supplicant: wlan0: CTRL-EVENT-AVOID-FREQ ranges=5945-6505
+11-20 02:34:59.780 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:34:59.780 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17339, identity:qcom-perfd
+11-20 02:34:59.782 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:34:59.790  1882  2017 D BatteryChargeControl: bcc get no support from smart charge mode
+11-20 02:34:59.811 17262 14888 I [UAH_CLIENT]: UahRelease, handle:8525
+11-20 02:34:59.814  5277  6816 D CommonApp-100-10331: transport layer data is invalid
+11-20 02:34:59.816  5277  6816 D CommonApp-103-10331: transport layer data is invalid
+11-20 02:34:59.816  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:34:59.816  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:34:59.816  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:00.000  3624  4559 V AlarmManager: sending alarm Alarm{c85f07d type 3 origWhen 5384120 whenElapsed 5384120 android} uid 1000 whenElapsed 5384120 windowLength 0 maxWhenElapsed 5384120 repeatInterval 0 action null component null tag TIME_TICK flags 0x9 procName system_server
+11-20 02:35:00.014  5098  5824 D AMC     : [TriggerSystem] handleLoopTick trigger:vowifihandover phoneId:0 voWifiHandoverCount:0
+11-20 02:35:00.015  5098  5824 D AMC     : [TriggerSystem] handleLoopTick trigger:vowifihandover phoneId:1 voWifiHandoverCount:0
+11-20 02:35:00.018  5277  5277 D SubsysBroadcastManager: onReceive action:android.intent.action.TIME_TICK
+11-20 02:35:00.023  3624  3624 D LightsServiceExtImpl: currentTime is not belong to 700 - 2330
+11-20 02:35:00.036  5344 30055 D PhoneUsageTime: lastChargeFullTime=1795113240024 LastChargeFullDurationTime=3934175
+11-20 02:35:00.042 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:00.042 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17340, identity:qcom-perfd
+11-20 02:35:00.044 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:00.045  4906  4906 I SystemUi--Statusbar: QsClock-->textWidth:206.0, mPaddingEnd 21, dynamicWidth 68, systemFontScale 1.0
+11-20 02:35:00.076 17262 14890 I [UAH_CLIENT]: UahRelease, handle:8526
+11-20 02:35:00.081  4906  4906 E ndroid.systemui: Invalid resource ID 0x0000001a.
+11-20 02:35:00.112  1882  2010 E bms_heating: BmsHeatingCheckThread status: 0
+11-20 02:35:00.115  1990  7616 E HWComposer: getLuts: getLuts failed for display 4630946369417878146: UNSUPPORTED (8)
+11-20 02:35:00.293  1751   473 I sensors-hal: handle_sns_std_sensor_event:103, oplus rgb_rear sample: (cct, lux, ir, x, y)[5200, 0, 476, 338, 333]
+11-20 02:35:00.293  1751   473 I sensors-hal: handle_sns_std_sensor_event:105, oplus rgb_rear sample: (r, g, b, c w)[0, 0, 0, 0, 0]
+11-20 02:35:00.297 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:00.297 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17341, identity:qcom-perfd
+11-20 02:35:00.300 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:00.315  1990  7616 E HWComposer: getLuts: getLuts failed for display 4630946369417878146: UNSUPPORTED (8)
+11-20 02:35:00.329 17262 14894 I [UAH_CLIENT]: UahRelease, handle:8527
+11-20 02:35:00.669  3624  4620 D WifiStaIfaceHidlImpl: getCachedScanData is not implemented by HIDL
+11-20 02:35:00.682  5277  5277 D VendorWifiService: onEvent event:9,action:1
+11-20 02:35:00.696  3624  4728 D OplusWifiPower_TriggerCenter: mComponentCallback: wifistat
+11-20 02:35:00.791  1882  2017 D BatteryChargeControl: bcc get no support from smart charge mode
+11-20 02:35:00.793 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:00.793 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17342, identity:qcom-perfd
+11-20 02:35:00.795 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:00.827 17262 14895 I [UAH_CLIENT]: UahRelease, handle:8528
+11-20 02:35:00.836  5277  6816 D CommonApp-100-10331: transport layer data is invalid
+11-20 02:35:00.837  5277  6816 D CommonApp-103-10331: transport layer data is invalid
+11-20 02:35:00.838  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:00.838  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:00.838  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:01.036 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:01.036 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17339, identity:qcom-perfd
+11-20 02:35:01.040 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:01.045  4906  4906 I SystemUi--Statusbar: QsClock-->textWidth:206.0, mPaddingEnd 21, dynamicWidth 68, systemFontScale 1.0
+11-20 02:35:01.067 17262 14897 I [UAH_CLIENT]: UahRelease, handle:8529
+11-20 02:35:01.113  1882  2010 E bms_heating: BmsHeatingCheckThread status: 0
+11-20 02:35:01.120  1751   441 I sensors-hal: get_brightness:1652, light_iface: get_brightness, brl 0, pwm_turbo_on 0/0, hbm_dc 0
+11-20 02:35:01.149  3624  4500 W SensorService: Dropping 1 cached events (10000/10000) to save 1/1 new events. 99 events previously dropped, app:com.google.android.gms type=11
+11-20 02:35:01.152  4906 14696 D SyncClipboard: [SignalRClient] Ping sent
+11-20 02:35:01.221  3624  4500 W OPLUS_LOG_LOAD: ==LOGS PROG INFO, prog(system_server) ==
+11-20 02:35:01.221  3624  4500 W SensorService: Dropping 1 cached events (10000/10000) to save 1/1 new events. 99 events previously dropped, app:com.google.android.gms type=10
+11-20 02:35:01.295  1751   473 I sensors-hal: handle_sns_std_sensor_event:103, oplus rgb_rear sample: (cct, lux, ir, x, y)[5200, 0, 476, 338, 333]
+11-20 02:35:01.295  1751   473 I sensors-hal: handle_sns_std_sensor_event:105, oplus rgb_rear sample: (r, g, b, c w)[0, 0, 0, 0, 0]
+11-20 02:35:01.297 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:01.297 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17340, identity:qcom-perfd
+11-20 02:35:01.300 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:01.329 17262 14901 I [UAH_CLIENT]: UahRelease, handle:8530
+11-20 02:35:01.788 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:01.788 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17341, identity:qcom-perfd
+11-20 02:35:01.790 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:01.792  1882  2017 D BatteryChargeControl: bcc get no support from smart charge mode
+11-20 02:35:01.821  3624  4296 D osense.compress: com.android.vending do shrink, target ratio = 90, final ratio = 90, cur ratio = 87
+11-20 02:35:01.824 17262 14902 I [UAH_CLIENT]: UahRelease, handle:8531
+11-20 02:35:01.862  5277  6816 D CommonApp-100-10331: transport layer data is invalid
+11-20 02:35:01.863  5277  6816 D CommonApp-103-10331: transport layer data is invalid
+11-20 02:35:01.864  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:01.864  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:01.864  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:02.049 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:02.049 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17342, identity:qcom-perfd
+11-20 02:35:02.052 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:02.058  4906  4906 I SystemUi--Statusbar: QsClock-->textWidth:206.0, mPaddingEnd 21, dynamicWidth 68, systemFontScale 1.0
+11-20 02:35:02.080 17262 14905 I [UAH_CLIENT]: UahRelease, handle:8532
+11-20 02:35:02.115  1882  2010 E bms_heating: BmsHeatingCheckThread status: 0
+11-20 02:35:02.214  4906  5616 I SystemUi--Statusbar: OplusNetworkSpeedControllExImpl-->updateNetworkSpeed: isConnected:true,isSwitchOn:true,isSuspend:false,isPause:false
+11-20 02:35:02.218  4906  5616 I SystemUi--Statusbar: OplusNetworkSpeedControllExImpl-->getTotalByte: totalRxBytes:232708937,totalTxBytes:173365246,loopbackTxBytes:63949255,loopbackRxBytes:63949255 ,totalBytes:278175673
+11-20 02:35:02.252 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:02.252 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17339, identity:qcom-perfd
+11-20 02:35:02.253 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:02.281 17262 14909 I [UAH_CLIENT]: UahRelease, handle:8533
+11-20 02:35:02.298  1808  2263 I SDM     : ResourceImpl::NeedsValidate: needs_validate = true, for display 77-0
+11-20 02:35:02.319  1751   473 I sensors-hal: handle_sns_std_sensor_event:103, oplus rgb_rear sample: (cct, lux, ir, x, y)[5200, 0, 476, 338, 333]
+11-20 02:35:02.319  1751   473 I sensors-hal: handle_sns_std_sensor_event:105, oplus rgb_rear sample: (r, g, b, c w)[0, 0, 0, 0, 0]
+11-20 02:35:02.498  1624  1676 E TetherController: property_get sys.radio.data.modem_share_flag return 0, 1!
+11-20 02:35:02.520  3624  4618 V NetworkPolicy: updateNetworkEnabledNL() return
+11-20 02:35:02.521  3624  4618 V NetworkPolicy: updateNotificationsNL not process
+11-20 02:35:02.595  1719  5793 I vendor.qti.bluetooth@1.0-ibs_handler: [ibs_handler.cpp:778] ProcessIbsCmd: Received IBS_WAKE_IND: 0xFD
+11-20 02:35:02.596  1719  5793 D vendor.qti.bluetooth@1.0-ibs_handler: [ibs_handler.cpp:372] SerialClockVote: vote for UART CLK ON
+11-20 02:35:02.596  1719  5793 D vendor.qti.bluetooth@1.0-wake_lock: [wake_lock.cpp:135] Acquire wakelock is acquired 
+11-20 02:35:02.596  1719  5793 I vendor.qti.bluetooth@1.0-ibs_handler: [ibs_handler.cpp:795] ProcessIbsCmd: Writing IBS_WAKE_ACK
+11-20 02:35:02.598  5061  5386 I bluetooth: [btif_bqr.cc:1267] vendor_specific_event_callback: Unhandled BQR subevent 0x01
+11-20 02:35:02.599  5061  5386 D bluetooth: [btif_bqr.cc:752] CategorizeBqrEvent: length: 55 quality_report_id: 0x01
+11-20 02:35:02.599  5061  5386 D btm_dev : [btm_dev.cc:301]  is_handle_equal: handle=1 is not found
+11-20 02:35:02.599  5061  5386 D btm_dev : [btm_dev.cc:301]  is_handle_equal: handle=1 is not found
+11-20 02:35:02.599  5061  5818 I BluetoothInCallService: BluetoothInCallService = null
+11-20 02:35:02.599  5061  5386 D btm_dev : [btm_dev.cc:301]  is_handle_equal: handle=1 is not found
+11-20 02:35:02.599  5061  5386 D btm_dev : [btm_dev.cc:301]  is_handle_equal: handle=1 is not found
+11-20 02:35:02.599  5061  5386 D btm_dev : [btm_dev.cc:301]  is_handle_equal: handle=1 is not found
+11-20 02:35:02.600  5061  5386 D btm_dev : [btm_dev.cc:301]  is_handle_equal: handle=1 is not found
+11-20 02:35:02.600  5061  5386 D btm_dev : [btm_dev.cc:301]  is_handle_equal: handle=1 is not found
+11-20 02:35:02.600  5061  5386 D btm_acl : [btm_acl.cc:377] btm_bda_to_acl: bda=xx:xx:xx:xx:19:f1 transport=1 not found in acl_db
+11-20 02:35:02.600  5061  5386 I bluetooth: [btif_bqr.cc:1204] bqr_delivery_event: len: 55, bqr_id: 1, addr: xx:xx:xx:xx:19:f1, lmp_ver: 11, manufacturer_id: 210, lmp_subver: 8220
+11-20 02:35:02.600  5061  5818 I BluetoothQualityReportJni: [com_android_bluetooth_BluetoothQualityReport.cpp:48] bqr_delivery_callback: 
+11-20 02:35:02.600  5061  5818 I BluetoothQualityReportNativeInterface: rawData Length = 85
+11-20 02:35:02.604  5061  5818 I BluetoothQualityReportNativeInterface: BQR: {
+11-20 02:35:02.604  5061  5818 I BluetoothQualityReportNativeInterface:   mAddr: XX:XX:XX:XX:19:F1, mLmpVer: 0x0B, mLmpSubVer: 0x201C, mManufacturerId: 0x00D2, mName: Xiaomi Smart Band 7 19F1, mBluetoothClass: 0,
+11-20 02:35:02.604  5061  5818 I BluetoothQualityReportNativeInterface:   BqrCommon: {
+11-20 02:35:02.604  5061  5818 I BluetoothQualityReportNativeInterface:     mQualityReportId: Quality monitor(0x01), mPacketType: INVALID(0x00), mConnectionHandle: 0x0001, mConnectionRole: 0(0), mTxPowerLevel: 0, mRssi: -48, mSnr: 0, mUnusedAfhChannelCount: 0,
+11-20 02:35:02.604  5061  5818 I BluetoothQualityReportNativeInterface:     mAfhSelectUnidealChannelCount: 0, mLsto: 0, mPiconetClock: 0x00000000, mRetransmissionCount: 0, mNoRxCount: 0, mNakCount: 0, mLastTxAckTimestamp: 0x00000000, mFlowOffCount: 0,
+11-20 02:35:02.604  5061  5818 I BluetoothQualityReportNativeInterface:     mLastFlowOnTimestamp: 0x00000000, mOverflowCount: 0, mUnderflowCount: 0, mAddr: XX:XX:XX:XX:00:00, mCalFailedItemCount: 0,
+11-20 02:35:02.604  5061  5818 I BluetoothQualityReportNativeInterface:     mTxTotalPackets: 0, mTxUnackPackets: 0, mTxFlushPackets: 0, mTxLastSubeventPackets: 0, mCrcErrorPackets: 0, mRxDupPackets: 0, mRxUnRecvPackets: 0, mCoexInfoMask: 0
+11-20 02:35:02.604  5061  5818 I BluetoothQualityReportNativeInterface:   }
+11-20 02:35:02.604  5061  5818 I BluetoothQualityReportNativeInterface: }
+11-20 02:35:02.605  5061  5061 I oplus_bt_dual_sync: [oplus_bt_dual_sync.cc:151] stack_down_sync_action: type=18, len=17
+11-20 02:35:02.605  5061  5061 I oplus_bt_qos_monitor: [oplus_bt_qos_monitor.cc:118] get_oplus_qos_data: getting qos data
+11-20 02:35:02.637  1719  5793 I vendor.qti.bluetooth@1.0-ibs_handler: [ibs_handler.cpp:825] ProcessIbsCmd: Received IBS_SLEEP_IND: 0xFE
+11-20 02:35:02.638  1719  5793 D vendor.qti.bluetooth@1.0-ibs_handler: [ibs_handler.cpp:391] SerialClockVote: vote for UART CLK OFF
+11-20 02:35:02.662  2364  2439 E WeatherS_PrivacyStatementExport: isAgreed1
+11-20 02:35:02.789  1719  5448 D vendor.qti.bluetooth@1.0-wake_lock: [wake_lock.cpp:158] Release wakelock is released 
+11-20 02:35:02.792  1882  2017 D BatteryChargeControl: bcc get no support from smart charge mode
+11-20 02:35:02.794 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:02.794 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17340, identity:qcom-perfd
+11-20 02:35:02.796 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:02.826 17262 14911 I [UAH_CLIENT]: UahRelease, handle:8534
+11-20 02:35:02.887  5277  6816 D CommonApp-100-10331: transport layer data is invalid
+11-20 02:35:02.888  5277  6816 D CommonApp-103-10331: transport layer data is invalid
+11-20 02:35:02.888  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:02.888  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:02.888  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:02.982 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:02.982 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17341, identity:qcom-perfd
+11-20 02:35:02.984 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:03.013 17262 14913 I [UAH_CLIENT]: UahRelease, handle:8535
+11-20 02:35:03.049  4906  4906 I SystemUi--Statusbar: QsClock-->textWidth:206.0, mPaddingEnd 21, dynamicWidth 68, systemFontScale 1.0
+11-20 02:35:03.118  1882  2010 E bms_heating: BmsHeatingCheckThread status: 0
+11-20 02:35:03.141  1751   441 I sensors-hal: get_brightness:1652, light_iface: get_brightness, brl 0, pwm_turbo_on 0/0, hbm_dc 0
+11-20 02:35:03.166  3624  4500 W SensorService: Dropping 1 cached events (10000/10000) to save 1/1 new events. 99 events previously dropped, app:com.google.android.gms type=11
+11-20 02:35:03.225  3624  4500 W SensorService: Dropping 1 cached events (10000/10000) to save 1/1 new events. 99 events previously dropped, app:com.google.android.gms type=10
+11-20 02:35:03.285 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:03.286 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17342, identity:qcom-perfd
+11-20 02:35:03.288 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:03.318 17262 14915 I [UAH_CLIENT]: UahRelease, handle:8536
+11-20 02:35:03.319  1751   473 I sensors-hal: handle_sns_std_sensor_event:103, oplus rgb_rear sample: (cct, lux, ir, x, y)[5200, 0, 476, 338, 333]
+11-20 02:35:03.319  1751   473 I sensors-hal: handle_sns_std_sensor_event:105, oplus rgb_rear sample: (r, g, b, c w)[0, 0, 0, 0, 0]
+11-20 02:35:03.694  3624  4620 D WifiStaIfaceHidlImpl: getCachedScanData is not implemented by HIDL
+11-20 02:35:03.706  5277  5277 D VendorWifiService: onEvent event:9,action:1
+11-20 02:35:03.717 30467 31046 E APS_ALOG: CAM_ALOG_LIMIT,Fatal Err! mFd -1
+11-20 02:35:03.717 30467 31046 E APS_ALOG: CAM_ALOG_LIMIT,Fatal Err! FilePath nullptr!
+11-20 02:35:03.717 30467 31046 I APS_ALOG: CAM_ALOG_LIMIT, re-create file!
+11-20 02:35:03.718 30467 31046 E APS_ALOG: Failed to open directory
+11-20 02:35:03.718 30467 31046 I APS_ALOG: spaceCheck: freeSpace(49148) totalSpace(226115)
+11-20 02:35:03.718 30467 31046 I APS_ALOG: spaceCheck: threshold(5120) isEnough(1)
+11-20 02:35:03.718 30467 31046 I APS_ALOG: open sUseALog(0) sEnable(0) sSpaceOK(1) sFlushThreadRunning(1) sEncryptEnable(0)
+11-20 02:35:03.718  3624  4728 D ScorerUtils: isLowTraffic: txTputKBps=18, rxTputKBps=31
+11-20 02:35:03.718 30467 31046 E APS_ALOG: FileALogWriter: file open failed /data/vendor/cam_alog_2026_1120_023503_30467_01.txt
+11-20 02:35:03.718 30467 31046 E APS_ALOG: Unable to open file. Please disable SELinux and restart camerahalserver. !!!
+11-20 02:35:03.718 30467 31046 I APS_ALOG: flushRoutine g_immediateFlush=0 g_pendingCount=0 g_oobCount=0 writer not opened
+11-20 02:35:03.719  3624  4728 D OplusWifiPower_TriggerCenter: mComponentCallback: wifistat
+11-20 02:35:03.785 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:03.785 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17339, identity:qcom-perfd
+11-20 02:35:03.787 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:03.793  1882  2017 D BatteryChargeControl: bcc get no support from smart charge mode
+11-20 02:35:03.817 17262 14917 I [UAH_CLIENT]: UahRelease, handle:8537
+11-20 02:35:03.910  5277  6816 D CommonApp-100-10331: transport layer data is invalid
+11-20 02:35:03.911  5277  6816 D CommonApp-103-10331: transport layer data is invalid
+11-20 02:35:03.911  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:03.912  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:03.912  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:04.011  1882  2014 D vendor.oplus.hardware.charger-V11-service: ret_value:170, read content:,280,289,4306,4300,0,2000,2000,100,100,1,5,-1,8933,100,1,1048704,1,1,0,0,4395,0,0,0,0,3,1,0,262,0,4,2,0,1,0,0,0,0,2,0,1,0,100,0,0,0,5,5,0,0, 0, 0, 0, 0x03, 0, 0, 0x01, 1
+11-20 02:35:04.011  1882  2014 D vendor.oplus.hardware.charger-V11-service: gmtime: 2026-11-20-02-35-04
+11-20 02:35:04.012  1882  2014 D vendor.oplus.hardware.charger-V11-service: usb_online:1, ac_online:0, wireless_online:-2147483646
+11-20 02:35:04.052 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:04.052 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17340, identity:qcom-perfd
+11-20 02:35:04.053 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:04.061  4906  4906 I SystemUi--Statusbar: QsClock-->textWidth:206.0, mPaddingEnd 21, dynamicWidth 68, systemFontScale 1.0
+11-20 02:35:04.081 17262 14919 I [UAH_CLIENT]: UahRelease, handle:8538
+11-20 02:35:04.091  1882  1882 D ChargerInfo: getInfo: type: 0x1, update: 1
+11-20 02:35:04.091  1882  1974 D ChargerInfo: chargerInfoUpdateThread: update start
+11-20 02:35:04.096  1882  1974 D ChargerInfo: enableTx: path(/proc/wireless/enable_tx): not exist
+11-20 02:35:04.103  1882  1974 D ChargerInfo: get_ui_charge_icon_type: [3 0] [0 1] 0
+11-20 02:35:04.112  1882  1974 D ChargerInfo: cpaPower:18000 isChargeOnline:1 isSupportRetentionTopic:0
+11-20 02:35:04.112  1882  1974 D vendor.oplus.hardware.charger-V11-service: get_config_path : [, single_, ]
+11-20 02:35:04.113  1882  1974 E ChargerInfo: SingleHyperPath not found
+11-20 02:35:04.113  1882  1974 D ChargerInfo: CarC: path(/sys/class/oplus_chg/battery/gauge_car_c): not exist
+11-20 02:35:04.113  1882  1974 D ChargerInfo: chargerInfoUpdateThread: update end
+11-20 02:35:04.113  1882  1974 D ChargerInfo: chargerInfoUpdateThread: update wait
+11-20 02:35:04.113  1882  1882 D ChargerInfo: enableTx: path(/proc/wireless/enable_tx): not exist
+11-20 02:35:04.113  1882  1882 D ChargerInfo: getInfo: {"Update":{"batteryFcc":1490,"batteryRm":1490,"bddLeakCurr":0,"bmsStatus":0,"bypassChgStatus":0,"chargeTimeRemaining":0,"cpaPower":18,"enableTx":true,"fastCharge":0,"isSupportSpeedCharge":0,"notifyCode":1048704,"otgOnline":1,"ppsChargePower":0,"ppsCharging":0,"shortCHwStatus":0,"shortIcOtpStatus":0,"uiIconType":1,"uiPower":0,"usbStatus":0,"wlsAdapterPower":0}}
+11-20 02:35:04.115  3624  4777 D OplusWifiService: notifyBatteryInfoChanged: feature not supported
+11-20 02:35:04.116  3624  3624 D PulseLight: isCurrentInLimitTime is false
+11-20 02:35:04.116  3624  3624 D PulseLight: turn off lights
+11-20 02:35:04.116  3624  3624 D PulseLight: turn Off BatteryLights
+11-20 02:35:04.120  1882  2010 E bms_heating: BmsHeatingCheckThread status: 0
+11-20 02:35:04.202 11926 12344 D gaia-GaiaConnectChecker: start connect check++
+11-20 02:35:04.278 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:04.279 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17341, identity:qcom-perfd
+11-20 02:35:04.280 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:04.309 17262 14921 I [UAH_CLIENT]: UahRelease, handle:8539
+11-20 02:35:04.318  1751   473 I sensors-hal: handle_sns_std_sensor_event:103, oplus rgb_rear sample: (cct, lux, ir, x, y)[5200, 0, 476, 338, 333]
+11-20 02:35:04.318  1751   473 I sensors-hal: handle_sns_std_sensor_event:105, oplus rgb_rear sample: (r, g, b, c w)[0, 0, 0, 0, 0]
+11-20 02:35:04.777 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:04.778 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17342, identity:qcom-perfd
+11-20 02:35:04.779 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:04.793  1882  2017 D BatteryChargeControl: bcc get no support from smart charge mode
+11-20 02:35:04.808 17262 14923 I [UAH_CLIENT]: UahRelease, handle:8540
+11-20 02:35:04.935  5277  6816 D CommonApp-100-10331: transport layer data is invalid
+11-20 02:35:04.936  5277  6816 D CommonApp-103-10331: transport layer data is invalid
+11-20 02:35:04.936  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:04.937  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:04.937  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:05.037 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:05.037 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17339, identity:qcom-perfd
+11-20 02:35:05.038 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:05.042  4906  4906 I SystemUi--Statusbar: QsClock-->textWidth:206.0, mPaddingEnd 21, dynamicWidth 68, systemFontScale 1.0
+11-20 02:35:05.070 17262 14925 I [UAH_CLIENT]: UahRelease, handle:8541
+11-20 02:35:05.121  1882  2010 E bms_heating: BmsHeatingCheckThread status: 0
+11-20 02:35:05.162  1751   441 I sensors-hal: get_brightness:1652, light_iface: get_brightness, brl 0, pwm_turbo_on 0/0, hbm_dc 0
+11-20 02:35:05.167  1990  7616 E HWComposer: getLuts: getLuts failed for display 4630946369417878146: UNSUPPORTED (8)
+11-20 02:35:05.169  3624  4500 W SensorService: Dropping 1 cached events (10000/10000) to save 1/1 new events. 99 events previously dropped, app:com.google.android.gms type=11
+11-20 02:35:05.231  3624  4500 W SensorService: Dropping 1 cached events (10000/10000) to save 1/1 new events. 99 events previously dropped, app:com.google.android.gms type=10
+11-20 02:35:05.297 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:05.297 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17340, identity:qcom-perfd
+11-20 02:35:05.299 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:05.328 17262 14927 I [UAH_CLIENT]: UahRelease, handle:8542
+11-20 02:35:05.333  1990  7616 E HWComposer: getLuts: getLuts failed for display 4630946369417878146: UNSUPPORTED (8)
+11-20 02:35:05.344  1751   473 I sensors-hal: handle_sns_std_sensor_event:103, oplus rgb_rear sample: (cct, lux, ir, x, y)[5200, 0, 476, 338, 333]
+11-20 02:35:05.344  1751   473 I sensors-hal: handle_sns_std_sensor_event:105, oplus rgb_rear sample: (r, g, b, c w)[0, 0, 0, 0, 0]
+11-20 02:35:05.787 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:05.787 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17341, identity:qcom-perfd
+11-20 02:35:05.789 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:05.793  1882  2017 D BatteryChargeControl: bcc get no support from smart charge mode
+11-20 02:35:05.816 17262 14929 I [UAH_CLIENT]: UahRelease, handle:8543
+11-20 02:35:05.959  5277  6816 D CommonApp-100-10331: transport layer data is invalid
+11-20 02:35:05.960  5277  6816 D CommonApp-103-10331: transport layer data is invalid
+11-20 02:35:05.960  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:05.961  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:05.961  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:06.053 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:06.053 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17342, identity:qcom-perfd
+11-20 02:35:06.054 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:06.056  4906  4906 I SystemUi--Statusbar: QsClock-->textWidth:206.0, mPaddingEnd 21, dynamicWidth 68, systemFontScale 1.0
+11-20 02:35:06.085 17262 14933 I [UAH_CLIENT]: UahRelease, handle:8544
+11-20 02:35:06.123  1882  2010 E bms_heating: BmsHeatingCheckThread status: 0
+11-20 02:35:06.166  8617  9648 V BinderSender: Uid 10000 already starts
+11-20 02:35:06.223  4906  5616 I SystemUi--Statusbar: OplusNetworkSpeedControllExImpl-->updateNetworkSpeed: isConnected:true,isSwitchOn:true,isSuspend:false,isPause:false
+11-20 02:35:06.227  4906  5616 I SystemUi--Statusbar: OplusNetworkSpeedControllExImpl-->getTotalByte: totalRxBytes:232775633,totalTxBytes:173440935,loopbackTxBytes:63949359,loopbackRxBytes:63949359 ,totalBytes:278317850
+11-20 02:35:06.269 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:06.269 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17339, identity:qcom-perfd
+11-20 02:35:06.271 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:06.298  1808  2263 I SDM     : ResourceImpl::NeedsValidate: needs_validate = true, for display 77-0
+11-20 02:35:06.299 17262 14936 I [UAH_CLIENT]: UahRelease, handle:8545
+11-20 02:35:06.344  1751   473 I sensors-hal: handle_sns_std_sensor_event:103, oplus rgb_rear sample: (cct, lux, ir, x, y)[5200, 0, 476, 338, 333]
+11-20 02:35:06.344  1751   473 I sensors-hal: handle_sns_std_sensor_event:105, oplus rgb_rear sample: (r, g, b, c w)[0, 0, 0, 0, 0]
+11-20 02:35:06.718  3624  4620 D WifiStaIfaceHidlImpl: getCachedScanData is not implemented by HIDL
+11-20 02:35:06.733  5277  5277 D VendorWifiService: onEvent event:9,action:1
+11-20 02:35:06.741  3624  4728 D ScorerUtils: isLowTraffic: txTputKBps=17, rxTputKBps=14
+11-20 02:35:06.743  3624  4728 D OplusWifiPower_TriggerCenter: mComponentCallback: wifistat
+11-20 02:35:06.790 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:06.790 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17340, identity:qcom-perfd
+11-20 02:35:06.792 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:06.795  1882  2017 D BatteryChargeControl: bcc get no support from smart charge mode
+11-20 02:35:06.821 17262 14938 I [UAH_CLIENT]: UahRelease, handle:8546
+11-20 02:35:06.940  7846 22240 E midasd  : getTotalFlipsFromSf mCurFrameCount: 29993
+11-20 02:35:06.941  7846 22240 I midasd  : DisplayAgent updateDisplayDevInfo getRenderFps mFps:60 mRenderFps:3 mWidth:1240 mHeight:2772
+11-20 02:35:06.941  7846 22240 E midasd  : getTotalFlipsFromSf mCurFrameCount: 29993
+11-20 02:35:06.941  7846 22240 I midasd  : DisplayAgent updateDisplayDevInfo getRenderFps mFps:60 mRenderFps:0 mWidth:1240 mHeight:2772
+11-20 02:35:06.983  5277  6816 D CommonApp-100-10331: transport layer data is invalid
+11-20 02:35:06.984  5277  6816 D CommonApp-103-10331: transport layer data is invalid
+11-20 02:35:06.984  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:06.984  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:06.984  5277  6816 D ScorePolicy: handleScoreChanged: []
+11-20 02:35:06.998 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:06.998 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17341, identity:qcom-perfd
+11-20 02:35:07.000 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:07.030 17262 14940 I [UAH_CLIENT]: UahRelease, handle:8547
+11-20 02:35:07.050  4906  4906 I SystemUi--Statusbar: QsClock-->textWidth:206.0, mPaddingEnd 21, dynamicWidth 68, systemFontScale 1.0
+11-20 02:35:07.125  1882  2010 E bms_heating: BmsHeatingCheckThread status: 0
+11-20 02:35:07.169  3624  4500 W SensorService: Dropping 1 cached events (10000/10000) to save 1/1 new events. 99 events previously dropped, app:com.google.android.gms type=11
+11-20 02:35:07.181  1751   441 I sensors-hal: get_brightness:1652, light_iface: get_brightness, brl 0, pwm_turbo_on 0/0, hbm_dc 0
+11-20 02:35:07.230  3624  4500 W SensorService: Dropping 1 cached events (10000/10000) to save 1/1 new events. 99 events previously dropped, app:com.google.android.gms type=10
+11-20 02:35:07.289 17262 17262 I [UAH_CLIENT]: UahPlatformResAcquire
+11-20 02:35:07.289 17262 17262 I [UAH_CLIENT]: UahEventAcquire, cmdid:-3, pkg:1990 17342, identity:qcom-perfd
+11-20 02:35:07.293 17262 17271 E ANDR-PERF-RESOURCEQS: Resource with major=16, minor=0 not supported
+11-20 02:35:07.321 17262 14942 I [UAH_CLIENT]: UahRelease, handle:8548
+11-20 02:35:07.344  1751   473 I sensors-hal: handle_sns_std_sensor_event:103, oplus rgb_rear sample: (cct, lux, ir, x, y)[5200, 0, 476, 338, 333]
+11-20 02:35:07.344  1751   473 I sensors-hal: handle_sns_std_sensor_event:105, oplus rgb_rear sample: (r, g, b, c w)[0, 0, 0, 0, 0]

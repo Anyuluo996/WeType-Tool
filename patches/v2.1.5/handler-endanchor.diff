@@ -1,0 +1,16 @@
+--- a/InlineSuggestionHandler.smali
++++ b/InlineSuggestionHandler.smali
+@@ -5497,6 +5497,13 @@
+     move-result-object v10
+ 
+     .line 366
++    if-nez v10, :cond_d
++
++    # p6 fix: synthesize the missing end anchor view instead of failing
++    invoke-static {v6, v9}, Lwetypefix/EndAnchor;->ensure(Landroid/view/View;I)Landroid/view/View;
++
++    move-result-object v10
++
+     if-nez v10, :cond_d
+ 
+     .line 367
