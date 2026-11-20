@@ -258,3 +258,32 @@ ColorOS 拒绝版本降级(`install -d` 无效),回退只能卸载重装+重启�
 - 附加产物:悬浮键盘底栏常显开关(settings put global wetypefix_keep_floating_bar 1/0),
   p4 起生效。注意 apktool 会缓存 build/resources.zip,仅改 smali 时 manifest 版本号不会更新,
   每次构建前应删除 module-decoded/build/。
+
+
+## 自定义底栏背景透明化(p18/p19,配合 WeType_UI_Enhanced 图片背景)
+
+WeType_UI_Enhanced fork 加入了自定义图片背景(整窗 carrier 层),但 `↑↓←→` 自定义
+底栏始终是一块不透明色条。定位(p18):底栏视图的**前景**是模块自建的 Drawable 子类
+(`patches/v2.1.5/patched/ᛱᛲᛳᛴᛵᛶᛷᲀᤞᤝᲇᲁᛸᲈ.smali`,RuntimeShader 玻璃效果,
+draw() 只画一个背景矩形,箭头图标是独立子视图不受影响),其颜色沿父链向上采样宿主
+第一个不透明背景色——UI_Enhanced 清空条带背景后采样爬到上层白色容器,故始终发白。
+**p18(728)**:draw() 开头提前 return-void,前景玻璃层不再绘制。
+
+实测 p18 后底栏仍为均匀浅灰白——**p19(729)定位到第二层**:底栏的 **background**
+不是玻璃层,而是挂载代码通过反射从宿主取得的一个现成 Drawable 实例
+(模块借用宿主背景保持配色一致),与前景独立。
+**p19**:挂载点 `setBackground(v13)` → `setBackground(null)`
+(`attach-transparent-bg.diff`,单点替换只动传参;卸载还原逻辑按 getBackground()
+比较判等,不设背景时自然跳过清理分支,行为安全)。
+
+修复后底栏完全透明,透出下层内容(UI_Enhanced 图片背景开启时透出图片)。
+注意:未开图片背景时底栏透出的是窗口底层色,不再跟随宿主配色——如需跟随,
+可在该挂载点改为条件清空。
+
+## 签名更换记录(p18 起)
+
+旧自签密钥库 wetype-fix.jks 的密码在早期会话生成后丢失,经转录/artifacts/密码库/
+智能变体全量排查不可恢复,已备份为 wetype-fix.jks.lost-password-backup。
+p18(728) 起改用新密钥库(密码存于 Bitwarden 安全笔记,不在仓库/记忆中存明文)。
+**签名变化后升级需卸载重装 + 重启手机**,并在 LSPosed 重新启用模块、勾选作用域
+(微信输入法 + 系统框架);模块配置存于宿主 shared_prefs,重装不丢。

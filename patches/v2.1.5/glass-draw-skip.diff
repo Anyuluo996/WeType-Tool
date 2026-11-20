@@ -1,0 +1,15 @@
+diff --git "a/C:/Users/anyul/AppData/Local/Temp/p19-pristine/pristine/smali\\\341\233\261\341\233\262\341\233\263\341\233\264\341\233\265\341\233\266\341\233\267\341\262\200\341\244\236\341\244\235\341\262\207\341\262\201\341\233\270\341\262\210.smali" "b/C:/Users/anyul/.zcode/workspace/draft-7e260fe1-ada5-4ec3-a2ab-6cf2367865ab/wetype-fix/module-decoded/smali\\\341\233\261\341\233\262\341\233\263\341\233\264\341\233\265\341\233\266\341\233\267\341\262\200\341\244\236\341\244\235\341\262\207\341\262\201\341\233\270\341\262\210.smali"
+index e71724b..95937e2 100644
+--- "a/C:/Users/anyul/AppData/Local/Temp/p19-pristine/pristine/smali\\\341\233\261\341\233\262\341\233\263\341\233\264\341\233\265\341\233\266\341\233\267\341\262\200\341\244\236\341\244\235\341\262\207\341\262\201\341\233\270\341\262\210.smali"
++++ "b/C:/Users/anyul/.zcode/workspace/draft-7e260fe1-ada5-4ec3-a2ab-6cf2367865ab/wetype-fix/module-decoded/smali\\\341\233\261\341\233\262\341\233\263\341\233\264\341\233\265\341\233\266\341\233\267\341\262\200\341\244\236\341\244\235\341\262\207\341\262\201\341\233\270\341\262\210.smali"
+@@ -6434,6 +6434,10 @@
+ .method public final draw(Landroid/graphics/Canvas;)V
+     .locals 9
+ 
++    # wetypefix p18: skip the bar background fill so a transparent host skin
++    # (WeType UI Enhanced carrier) shows through; icons are separate views.
++    return-void
++
+     .line 1
+     const/4 v0, 0x6
+ 
